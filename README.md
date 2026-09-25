@@ -2,7 +2,7 @@
 
 Project website for **OmniCapBench: A Deep-Structured Evaluation Framework for Fine-Grained Audio-Visual Captioning** (NeurIPS 2026, Evaluations & Datasets Track).
 
-🌐 **Website:** https://01yzzyu.github.io/OmniCapBench-page/
+🌐 **Website:** https://01yzzyu.github.io/OmniCapBench/
 🤗 **Dataset:** https://huggingface.co/datasets/OmniCapBench/OmniCapBench
 📄 **Paper / arXiv:** coming soon
 💻 **Evaluation code:** coming soon
