@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OmniCapBench</title>
+<meta name="description" content="OmniCapBench: A Deep-Structured Evaluation Framework for Fine-Grained Audio-Visual Captioning. NeurIPS 2026 Evaluations and Datasets Track.">
+<meta property="og:title" content="OmniCapBench: A Deep-Structured Evaluation Framework for Fine-Grained Audio-Visual Captioning">
+<meta property="og:description" content="A benchmark that reframes audio-visual caption evaluation as a deep-structured diagnostic framework: 786 densely annotated videos, atomic verifiable units across Reference, Shot and Event tracks.">
+<meta property="og:image" content="static/images/teaser.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="static/images/teaser.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#127909;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#top"><span class="brand-mark">OCB</span> OmniCapBench</a>
+    <div class="nav-links">
+      <a href="#abstract">Abstract</a>
+      <a href="#framework">Framework</a>
+      <a href="#benchmark">Benchmark</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#analysis">Analysis</a>
+      <a href="#series">Series</a>
+      <a href="#bibtex">BibTeX</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <div class="venue-badge">
+      <i class="fas fa-award"></i> NeurIPS 2026 &nbsp;·&nbsp; Evaluations &amp; Datasets Track
+    </div>
+    <h1 class="title">
+      <span class="title-name">OmniCapBench</span>
+      <span class="title-sub">A Deep-Structured Evaluation Framework for<br>Fine-Grained Audio-Visual Captioning</span>
+    </h1>
+
+    <div class="authors">
+      <span class="author"><a href="#">Zhongyu Yang</a><sup>1,&hearts;</sup></span>
+      <span class="author"><a href="#">Jiale Tao</a><sup>1,&hearts;,&dagger;</sup></span>
+      <span class="author"><a href="#">Ruitao Chen</a><sup>1,&hearts;</sup></span>
+      <span class="author"><a href="#">Zuhao Yang</a><sup>2</sup></span>
+      <span class="author"><a href="#">Yingfang Yuan</a><sup>3</sup></span>
+      <span class="author"><a href="#">Xueliang Zhao</a><sup>1</sup></span>
+      <span class="author"><a href="#">Auden</a><sup>1</sup></span>
+      <span class="author"><a href="#">Kai Wang</a><sup>1</sup></span>
+      <span class="author"><a href="#">Shuai Shao</a><sup>1</sup></span>
+      <span class="author"><a href="#">Biao Wang</a><sup>1,&#9993;</sup></span>
+      <span class="author"><a href="#">Steve Yves</a><sup>1</sup></span>
+      <span class="author"><a href="#">Qinglin Lu</a><sup>1,&#9993;</sup></span>
+    </div>
+
+    <div class="affiliations">
+      <span><sup>1</sup> Hunyuan, Tencent</span>
+      <span><sup>2</sup> Nanyang Technological University</span>
+      <span><sup>3</sup> Northumbria University</span>
+    </div>
+    <div class="author-notes">
+      <span><sup>&hearts;</sup> Equal Contribution</span>
+      <span><sup>&dagger;</sup> Project Leader</span>
+      <span><sup>&#9993;</sup> Corresponding Author</span>
+    </div>
+
+    <div class="buttons">
+      <span class="btn btn-disabled" title="Coming soon"><i class="fas fa-file-lines"></i> Paper <em>(coming soon)</em></span>
+      <span class="btn btn-disabled" title="Coming soon"><i class="ai ai-arxiv"></i><i class="fas fa-scroll"></i> arXiv <em>(coming soon)</em></span>
+      <span class="btn btn-disabled" title="Coming soon"><i class="fab fa-github"></i> Code <em>(coming soon)</em></span>
+      <a class="btn btn-primary" href="https://huggingface.co/datasets/OmniCapBench/OmniCapBench" target="_blank" rel="noopener">&#129303; Dataset</a>
+      <a class="btn" href="#leaderboard"><i class="fas fa-ranking-star"></i> Leaderboard</a>
+      <a class="btn" href="#bibtex"><i class="fas fa-quote-right"></i> BibTeX</a>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat"><b>786</b><span>videos</span></div>
+      <div class="stat"><b>12.8 h</b><span>duration</span></div>
+      <div class="stat"><b>20 / 125</b><span>categories (L1/L2)</span></div>
+      <div class="stat"><b>5,818</b><span>references</span></div>
+      <div class="stat"><b>11,419</b><span>shots</span></div>
+      <div class="stat"><b>39,160</b><span>subshots</span></div>
+      <div class="stat"><b>6,537</b><span>audio events</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TEASER ============ -->
+<section class="section section-tight">
+  <div class="container">
+    <figure class="figure">
+      <img src="static/images/teaser.png" alt="Comparison of holistic evaluation, probe-based evaluation, and the OmniCapBench deep-structured evaluation framework.">
+      <figcaption>
+        <b>Existing evaluation frameworks vs. the deep-structured evaluation framework.</b>
+        <b>(A) Holistic evaluation</b> and <b>(B) probe-based evaluation</b> both derive scores from unstructured, free-form captions. The former treats the caption as a whole, producing an opaque score that masks local errors; the latter probes local errors with QA but sacrifices global coverage and is unstable across judges.
+        <b>(C) OmniCapBench (Ours)</b> natively represents the caption as atomic, verifiable audio-visual units. Deterministic rules verify structural and temporal relationships, then dispatch aligned units to localized LLMs for bounded semantic checks — preserving coverage and fine-grained error localization while removing the uncertainty of global LLM judges.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ ABSTRACT ============ -->
+<section class="section" id="abstract">
+  <div class="container narrow">
+    <h2 class="section-title">Abstract</h2>
+    <p class="abstract">
+      Multimodal large language models (MLLMs) are rapidly evolving toward continuous audio–visual reasoning, creating an urgent need for evaluations that expose their capability limits. Audio–visual captioning is an ideal diagnostic task, yet current benchmarks face a coupled trade-off: whole-caption scores provide coverage without localization, local probes provide localization without coverage, and unconstrained LLM judges introduce instability. We introduce <b>OmniCapBench</b> (Omni-Video Caption Benchmark), a benchmark that reframes audio–visual caption evaluation as a <b>deep-structured diagnostic framework</b>. OmniCapBench shifts the prediction target from free-form text to sets of atomic, verifiable evaluation units across three tracks: <b>entity references, visual shots, and audio events</b>, enabling reliable scoring with deterministic constraint checks and localized LLM-based semantic comparisons. With <b>786 densely annotated videos</b>, OmniCapBench effectively distinguishes MLLM perception errors, including temporal grounding failures, identity drift, cross-modal misalignment, and hallucinated descriptions. Evaluating frontier MLLMs reveals strong local perception but weak long-horizon audio–visual reasoning, particularly in identity drift and cross-modal misalignment, providing a fine-grained roadmap for omnimodal development.
+    </p>
+  </div>
+</section>
+
+<!-- ============ CONTRIBUTIONS ============ -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Contributions</h2>
+    <div class="cards three">
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-cubes"></i></div>
+        <h3>Deep-Structured Evaluation Paradigm</h3>
+        <p>We decompose audio–visual captioning into atomic, verifiable units, explicitly isolating semantic content, temporal grounding, identity tracking, and cross-modal association.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-vials"></i></div>
+        <h3>The OmniCapBench Benchmark</h3>
+        <p>A rigorous testbed of 786 densely annotated videos. Native Reference, Shot and Event tracks yield 5,818 entities, 6,537 audio events and 11,419 visual shots for fine-grained omnimodal diagnosis.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
+        <h3>Empirical Audit of Holistic Scoring</h3>
+        <p>We expose its vulnerability to judge instability and its tendency to mask localized errors — and reward structurally flawed outputs — demonstrating the necessity of deep-structured metrics.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FRAMEWORK ============ -->
+<section class="section" id="framework">
+  <div class="container">
+    <h2 class="section-title">Deep-Structured Evaluation</h2>
+    <p class="lead">
+      For a video <span class="mono">V</span>, OmniCapBench formalizes content as a native reference system
+      <span class="mono">S*(V) = (R, E, H)</span> — three interdependent tracks that separate <em>what</em> happened from <em>when</em> and <em>where</em> it occurred.
+    </p>
+
+    <div class="cards three tracks">
+      <div class="card track-r">
+        <div class="track-tag">Reference track &nbsp;<span class="mono">R</span></div>
+        <h3>Persistent identities</h3>
+        <p>Unique identifiers for key entities — people, objects and scenes — enabling consistent tracking of each entity throughout the video.</p>
+        <div class="chips"><span>Person</span><span>Object</span><span>Scene</span></div>
+      </div>
+      <div class="card track-e">
+        <div class="track-tag">Event track &nbsp;<span class="mono">E</span></div>
+        <h3>Timestamped audio</h3>
+        <p>Auditory events and spoken dialogue with precise, continuous temporal boundaries (e.g. a dog bark from 10.5 s to 12.0 s).</p>
+        <div class="chips"><span>Sound</span><span>Dialogue</span><span>Time range</span></div>
+      </div>
+      <div class="card track-h">
+        <div class="track-tag">Shot track &nbsp;<span class="mono">H</span></div>
+        <h3>Visual timeline &amp; grounding</h3>
+        <p>Segments the visual timeline into shots and subshots, and acts as the unifying structure that anchors references and audio events to specific frames.</p>
+        <div class="chips"><span>Shot</span><span>Subshot</span><span>Cross-link</span></div>
+      </div>
+    </div>
+
+    <h3 class="sub-title">Scoring contract: structure first, semantics second</h3>
+    <div class="pipeline-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Native unit generation</h4>
+        <p>The model receives the video and directly emits the three prediction tracks as a structured JSON object, rather than a free-form paragraph — removing the ambiguity of monolithic text.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Structural verification &amp; matching</h4>
+        <p>Deterministic rules reject undefined IDs, malformed time spans and impossible event–shot links. Surviving units are matched by tIoU, with a bounded LLM matcher for references and subshots.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Localized semantic scoring</h4>
+        <p>Only structurally aligned unit pairs reach the LLM judge, which is restricted to local semantic equivalence on isolated fields — bidirectionally, so omissions hurt recall and hallucinations hurt precision.</p>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-group">
+        <h4><i class="fas fa-eye"></i> Visual</h4>
+        <ul>
+          <li><b>Ref Subject / Scene F1</b> — entity detection</li>
+          <li><b>RefUse</b> — correct persistent ID cited</li>
+          <li><b>CCC</b> — cross-shot coreference consistency</li>
+          <li><b>Shot / Subshot F1, tIoU</b> — temporal grounding</li>
+        </ul>
+      </div>
+      <div class="metric-group">
+        <h4><i class="fas fa-volume-high"></i> Audio</h4>
+        <ul>
+          <li><b>Event F1</b> — sound event recovery</li>
+          <li><b>Event tIoU</b> — boundary alignment</li>
+          <li><b>Dialogue / Non-dialogue semantics</b></li>
+        </ul>
+      </div>
+      <div class="metric-group">
+        <h4><i class="fas fa-link"></i> Audio-Visual</h4>
+        <ul>
+          <li><b>EVSA F1</b> — event attached to concurrent shot</li>
+          <li><b>Speaker F1</b> — dialogue assigned to right speaker</li>
+          <li><b>SGC</b> — schema compliance gate</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BENCHMARK ============ -->
+<section class="section section-alt" id="benchmark">
+  <div class="container">
+    <h2 class="section-title">Benchmark Construction</h2>
+    <figure class="figure">
+      <img src="static/images/pipeline.png" alt="Three-stage OmniCapBench data construction pipeline.">
+      <figcaption>
+        <b>OmniCapBench data construction pipeline.</b>
+        <b>Stage I</b> filters raw videos to isolate inputs with rich audio–visual complexity.
+        <b>Stage II</b> generates atomic units (References &rarr; Events &rarr; Shots) through an iterative multi-model loop
+        (<i>generate &rarr; evaluate &amp; validate &rarr; local refine &rarr; select</i>), enforcing structural integrity before semantic refinement.
+        <b>Stage III</b> applies traceable human audits to finalize the verified audio–visual reference system.
+      </figcaption>
+    </figure>
+
+    <h3 class="sub-title">Statistics</h3>
+    <div class="stats-layout">
+      <div class="table-wrap compact">
+        <table class="table">
+          <thead>
+            <tr><th>Statistic</th><th class="num">Avg. / Pct.</th><th class="num">Total</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Videos (&lt; 1 min)</td><td class="num">61.32%</td><td class="num">482</td></tr>
+            <tr><td>Videos (1–3 min)</td><td class="num">29.01%</td><td class="num">228</td></tr>
+            <tr><td>Videos (3–5 min)</td><td class="num">9.67%</td><td class="num">76</td></tr>
+            <tr><td>Duration (hours)</td><td class="num">—</td><td class="num">12.8</td></tr>
+            <tr><td>Categories (Level-1)</td><td class="num">—</td><td class="num">20</td></tr>
+            <tr class="row-div"><td>Categories (Level-2)</td><td class="num">—</td><td class="num">125</td></tr>
+            <tr><td>References</td><td class="num">7.40</td><td class="num">5,818</td></tr>
+            <tr><td>Shots</td><td class="num">14.53</td><td class="num">11,419</td></tr>
+            <tr><td>Subshots</td><td class="num">49.82</td><td class="num">39,160</td></tr>
+            <tr><td>Events</td><td class="num">8.32</td><td class="num">6,537</td></tr>
+            <tr><td class="indent"><em>— Dialogue</em></td><td class="num">6.83</td><td class="num">5,370</td></tr>
+          </tbody>
+        </table>
+        <p class="caption"><b>Key statistics of OmniCapBench</b>, comprising 786 videos. “Avg. / Pct.” denotes either the average per video or the percentage of total videos.</p>
+      </div>
+      <figure class="figure ring">
+        <img src="static/images/category_ring.png" alt="Category distribution of OmniCapBench: inner ring level-1 categories, outer ring level-2 subcategories.">
+        <figcaption><b>Category distribution.</b> Inner and outer rings represent level-1 categories and level-2 subcategories; segment area is proportional to video count.</figcaption>
+      </figure>
+    </div>
+
+    <h3 class="sub-title">Evaluation paradigm comparison</h3>
+    <p class="lead small">Does the protocol natively support the structural dimensions of omnimodal diagnosis?
+      <span class="legend"><span class="yes">&#10003;</span> natively supported as a verifiable unit</span>
+      <span class="legend"><span class="partial">&#9651;</span> implicitly judged</span>
+      <span class="legend"><span class="no">&#10007;</span> not supported</span>
+    </p>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Benchmark</th><th>Evaluated Unit</th><th>Scoring Operator</th>
+            <th class="num">Identity<br>Tracking</th><th class="num">Temporal<br>Grounding</th>
+            <th class="num">Audio-Visual<br>Association</th><th class="num">Diagnostic<br>Traceability</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="group"><td colspan="7">Whole-Caption Paradigm</td></tr>
+          <tr><td>AuroraCap</td><td>Caption</td><td>Global LLM</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td></tr>
+          <tr><td>VCapsBench</td><td>Caption</td><td>Global LLM</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td></tr>
+          <tr><td>UGC-VideoCap</td><td>Caption</td><td>Global LLM</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td></tr>
+          <tr><td>video-SALMONN 2</td><td>Caption</td><td>Global LLM</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td></tr>
+          <tr class="group"><td colspan="7">Probe-Based Paradigm</td></tr>
+          <tr><td>Omni-Cloze</td><td>Cloze QA</td><td>LLM Scorer</td><td class="num partial">&#9651;</td><td class="num partial">&#9651;</td><td class="num partial">&#9651;</td><td class="num partial">&#9651;</td></tr>
+          <tr class="group"><td colspan="7">Parse-then-Score Paradigm</td></tr>
+          <tr><td>LongVALE</td><td>Event text</td><td>Parser + LLM</td><td class="num no">&#10007;</td><td class="num yes">&#10003;</td><td class="num no">&#10007;</td><td class="num no">&#10007;</td></tr>
+          <tr><td>TimeChat</td><td>Timed script</td><td>Parser + LLM</td><td class="num no">&#10007;</td><td class="num yes">&#10003;</td><td class="num no">&#10007;</td><td class="num partial">&#9651;</td></tr>
+          <tr><td>OmniScript</td><td>Script text</td><td>Parser + LLM</td><td class="num partial">&#9651;</td><td class="num yes">&#10003;</td><td class="num partial">&#9651;</td><td class="num partial">&#9651;</td></tr>
+          <tr class="group"><td colspan="7">Native Atomic Paradigm</td></tr>
+          <tr class="ours"><td><b>OmniCapBench (Ours)</b></td><td>Atomic units</td><td>Rule + Local LLM</td><td class="num yes">&#10003;</td><td class="num yes">&#10003;</td><td class="num yes">&#10003;</td><td class="num yes">&#10003;</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEADERBOARD ============ -->
+<section class="section" id="leaderboard">
+  <div class="container">
+    <h2 class="section-title">Leaderboard</h2>
+    <p class="lead small">Scores are macro-averaged across videos. <b>Best</b> and <u>second-best</u> results are highlighted.
+      Evaluation is decoupled: rule-based structural compliance first, bounded semantic checks only on structurally aligned units.</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="structural" role="tab"><i class="fas fa-ruler-combined"></i> Rule-based structural</button>
+      <button class="tab" data-tab="semantic" role="tab"><i class="fas fa-comment-dots"></i> Localized semantic</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-structural">
+      <div class="table-wrap scroll">
+        <table class="table lb">
+          <thead>
+            <tr>
+              <th rowspan="2" class="sticky-col">Model</th>
+              <th rowspan="2" class="num">SGC</th>
+              <th colspan="8" class="grp grp-v">Visual</th>
+              <th colspan="2" class="grp grp-a">Audio</th>
+              <th colspan="2" class="grp grp-av">Audio-Visual</th>
+            </tr>
+            <tr>
+              <th class="num">RefUse</th><th class="num">CCC</th><th class="num">Ref Subj<br>F1</th><th class="num">Ref Scene<br>F1</th>
+              <th class="num">Shot<br>F1</th><th class="num">Shot<br>tIoU</th><th class="num">Subshot<br>F1</th><th class="num">Subshot<br>tIoU</th>
+              <th class="num">Event<br>F1</th><th class="num">Event<br>tIoU</th>
+              <th class="num">Speaker<br>F1</th><th class="num">EVSA<br>F1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group prop"><td colspan="14">Proprietary Models</td></tr>
+            <tr>
+              <td class="sticky-col model">Gemini 3.1-Pro</td>
+              <td class="num b1">97.36</td><td class="num b2">70.39</td><td class="num b2">34.43</td><td class="num b2">78.60</td><td class="num b2">82.68</td>
+              <td class="num b1">76.24</td><td class="num">70.74</td><td class="num">65.27</td><td class="num">48.76</td>
+              <td class="num b1">63.32</td><td class="num b1">71.92</td><td class="num b2">91.18</td><td class="num b1">51.46</td>
+            </tr>
+            <tr>
+              <td class="sticky-col model">Gemini 2.5-Pro</td>
+              <td class="num b2">96.73</td><td class="num b1">70.75</td><td class="num b1">37.81</td><td class="num b1">80.70</td><td class="num b1">83.65</td>
+              <td class="num">70.93</td><td class="num b1">72.58</td><td class="num b1">66.69</td><td class="num b2">49.18</td>
+              <td class="num b2">58.52</td><td class="num b2">69.35</td><td class="num">89.72</td><td class="num b2">43.74</td>
+            </tr>
+            <tr>
+              <td class="sticky-col model">Qwen3.5-Omni-Plus</td>
+              <td class="num">96.09</td><td class="num">66.92</td><td class="num">29.55</td><td class="num">73.57</td><td class="num">79.97</td>
+              <td class="num b2">71.25</td><td class="num b2">72.35</td><td class="num b2">65.69</td><td class="num">48.29</td>
+              <td class="num">53.92</td><td class="num">67.77</td><td class="num b1">91.20</td><td class="num">40.20</td>
+            </tr>
+            <tr>
+              <td class="sticky-col model">Qwen3.5-Omni-Flash</td>
+              <td class="num">95.58</td><td class="num">63.10</td><td class="num">24.31</td><td class="num">72.27</td><td class="num">66.07</td>
+              <td class="num">65.65</td><td class="num">68.99</td><td class="num">58.94</td><td class="num">46.52</td>
+              <td class="num">50.68</td><td class="num">69.34</td><td class="num">89.91</td><td class="num">35.58</td>
+            </tr>
+            <tr class="group open"><td colspan="14">Open-source Omnimodal Models</td></tr>
+            <tr>
+              <td class="sticky-col model">Qwen3-Omni-Instruct</td>
+              <td class="num">89.02</td><td class="num">40.96</td><td class="num">9.85</td><td class="num">54.84</td><td class="num">64.55</td>
+              <td class="num">49.98</td><td class="num">67.92</td><td class="num">29.51</td><td class="num">47.95</td>
+              <td class="num">41.70</td><td class="num">40.99</td><td class="num">88.35</td><td class="num">13.33</td>
+            </tr>
+            <tr>
+              <td class="sticky-col model">Qwen3-Omni-Captioner</td>
+              <td class="num">90.77</td><td class="num">44.96</td><td class="num">11.51</td><td class="num">54.36</td><td class="num">57.08</td>
+              <td class="num">52.29</td><td class="num">70.80</td><td class="num">39.51</td><td class="num b1">49.69</td>
+              <td class="num">41.31</td><td class="num">52.60</td><td class="num">88.68</td><td class="num">17.42</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caption"><b>Rule-based structural evaluation.</b> Metrics quantify structural compliance across Visual, Audio and Audio-Visual dimensions. <b>SGC</b> (schema compliance) is an independent prerequisite gate.</p>
+    </div>
+
+    <div class="tab-panel" id="tab-semantic">
+      <div class="table-wrap scroll">
+        <table class="table lb">
+          <thead>
+            <tr>
+              <th rowspan="3" class="sticky-col">Model</th>
+              <th colspan="7" class="grp grp-v">Visual</th>
+              <th colspan="2" class="grp grp-a">Audio</th>
+            </tr>
+            <tr>
+              <th rowspan="2" class="num">Shot</th>
+              <th colspan="2" class="num">Subject</th><th colspan="2" class="num">Scene</th><th colspan="2" class="num">Subshot</th>
+              <th rowspan="2" class="num">Dialogue</th><th rowspan="2" class="num">Non-<br>dialogue</th>
+            </tr>
+            <tr>
+              <th class="num">Recall</th><th class="num">Prec.</th>
+              <th class="num">Recall</th><th class="num">Prec.</th>
+              <th class="num">Recall</th><th class="num">Prec.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group prop"><td colspan="10">Proprietary Models</td></tr>
+            <tr>
+              <td class="sticky-col model">Gemini 3.1-Pro</td>
+              <td class="num b1">59.05</td><td class="num">43.78</td><td class="num b1">67.07</td><td class="num b2">51.78</td><td class="num b1">75.62</td>
+              <td class="num b1">53.29</td><td class="num b2">70.92</td><td class="num b2">91.18</td><td class="num b1">41.49</td>
+            </tr>
+            <tr>
+              <td class="sticky-col model">Gemini 2.5-Pro</td>
+              <td class="num b2">55.58</td><td class="num b1">51.53</td><td class="num">57.08</td><td class="num b1">56.80</td><td class="num">65.12</td>
+              <td class="num b2">53.05</td><td class="num b1">71.21</td><td class="num">89.72</td><td class="num b2">37.38</td>
+            </tr>
+            <tr>
+              <td class="sticky-col model">Qwen3.5-Omni-Plus</td>
+              <td class="num">54.17</td><td class="num b2">45.41</td><td class="num">62.84</td><td class="num">50.75</td><td class="num">69.80</td>
+              <td class="num">50.22</td><td class="num">70.66</td><td class="num b1">91.20</td><td class="num">36.82</td>
+            </tr>
+            <tr>
+              <td class="sticky-col model">Qwen3.5-Omni-Flash</td>
+              <td class="num">47.66</td><td class="num">43.87</td><td class="num b2">65.59</td><td class="num">44.41</td><td class="num b2">71.26</td>
+              <td class="num">44.08</td><td class="num">67.27</td><td class="num">89.91</td><td class="num">28.12</td>
+            </tr>
+            <tr class="group open"><td colspan="10">Open-source Omnimodal Models</td></tr>
+            <tr>
+              <td class="sticky-col model">Qwen3-Omni-Instruct</td>
+              <td class="num">34.63</td><td class="num">40.31</td><td class="num">62.02</td><td class="num">36.07</td><td class="num">70.73</td>
+              <td class="num">29.42</td><td class="num">57.84</td><td class="num">88.35</td><td class="num">20.51</td>
+            </tr>
+            <tr>
+              <td class="sticky-col model">Qwen3-Omni-Captioner</td>
+              <td class="num">36.08</td><td class="num">42.00</td><td class="num">50.96</td><td class="num">38.07</td><td class="num">54.53</td>
+              <td class="num">34.01</td><td class="num">46.05</td><td class="num">88.68</td><td class="num">19.65</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caption"><b>Localized semantic evaluation.</b> Semantic fidelity is assessed exclusively on structurally aligned units. Bidirectional scoring isolates distinct failure modes: recall penalizes factual omissions, precision penalizes hallucinations.</p>
+    </div>
+
+    <div class="submit-note">
+      <i class="fas fa-circle-info"></i>
+      Want your model on the leaderboard? The evaluation toolkit is <b>coming soon</b> — the data is already available on
+      <a href="https://huggingface.co/datasets/OmniCapBench/OmniCapBench" target="_blank" rel="noopener">Hugging Face</a>.
+    </div>
+  </div>
+</section>
+
+<!-- ============ ANALYSIS ============ -->
+<section class="section section-alt" id="analysis">
+  <div class="container">
+    <h2 class="section-title">Key Findings</h2>
+
+    <div class="findings">
+      <div class="finding">
+        <div class="finding-num">01</div>
+        <div>
+          <h3>Identity does not survive a cut</h3>
+          <p>Frontier models show strong basic perception (Gemini 2.5-Pro: 84.80% Ref Subject F1 on sub-minute videos), but tracking those identities across shots collapses — Cross-Shot Coreference Consistency drops to <b>37.81%</b> for Gemini 2.5-Pro and to <b>&asymp;10%</b> for open-source models. Long-term visual object permanence remains unsolved, and traditional metrics hide it by only checking whether an object was mentioned once.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-num">02</div>
+        <div>
+          <h3>Audio and vision are still two unaligned pathways</h3>
+          <p>Models excel at speech transcription (dialogue semantics &ge; 88%), yet environmental-sound reasoning stays weak, and <em>binding</em> sounds to their concurrent visual source is much harder still: Gemini 3.1-Pro falls from <b>63.32%</b> Event F1 to <b>51.46%</b> EVSA F1, while no open-source model exceeds 20%.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-num">03</div>
+        <div>
+          <h3>A precision–recall trade-off masked by fluent prose</h3>
+          <p>Scoring semantics only on structurally valid units exposes divergent strategies: Gemini 3.1-Pro is conservative (67.07% precision vs. 43.78% recall on subjects), omitting details to avoid errors, whereas other models inflate recall by hallucinating unverified attributes.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-num">04</div>
+        <div>
+          <h3>Schema is solved; deep structure is not</h3>
+          <p>Format errors are negligible (1.3% of Gemini 3.1-Pro failures). Its remaining errors concentrate in <b>action hallucination (28.5%)</b>, <b>audio-visual misalignment (23.7%)</b> and <b>audio hallucination (17.9%)</b>, while open-source models degrade uniformly across basic perception and cross-modal binding.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3 class="sub-title">The illusion of global text scores</h3>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr><th>Model</th><th class="num">Text Metric<br>(Prose)</th><th class="num">Native<br>Constraints</th><th class="num">Human<br>Audit</th></tr>
+            </thead>
+            <tbody>
+              <tr class="group"><td colspan="4">Pair 1: Qwen3.5-Omni-Flash vs. Qwen3-Omni</td></tr>
+              <tr><td>Weaker (Qwen3-Omni)</td><td class="num">52.2</td><td class="num">37.5</td><td class="num">21.6</td></tr>
+              <tr><td>Stronger (Qwen3.5-Omni-Flash)</td><td class="num">47.8</td><td class="num">62.5</td><td class="num">78.4</td></tr>
+              <tr class="group"><td colspan="4">Pair 2: Qwen3.5-Omni-Plus vs. Qwen3.5-Omni-Flash</td></tr>
+              <tr><td>Weaker (Qwen3.5-Omni-Flash)</td><td class="num">41.7</td><td class="num">21.4</td><td class="num">29.9</td></tr>
+              <tr><td>Stronger (Qwen3.5-Omni-Plus)</td><td class="num">58.3</td><td class="num">78.6</td><td class="num">70.1</td></tr>
+              <tr class="total"><td><b>Average (stronger models)</b></td><td class="num">53.0</td><td class="num">70.6</td><td class="num">74.2</td></tr>
+              <tr class="total"><td><b>Average (weaker models)</b></td><td class="num">47.0</td><td class="num">29.4</td><td class="num">25.8</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption">On two hard-to-distinguish pairs, global text metrics falsely penalize the stronger model and overestimate the weaker one, creating an illusion of parity. Native structural constraints resolve the gap and align with the human audit.</p>
+      </div>
+      <div>
+        <h3 class="sub-title">Judge sensitivity</h3>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th>Judge</th><th class="num">Holistic</th><th class="num">QA probes</th><th class="num">OmniCapBench</th></tr></thead>
+            <tbody>
+              <tr><td>Weak</td><td class="num">71.24</td><td class="num">61.17</td><td class="num">56.82</td></tr>
+              <tr><td>Mid</td><td class="num">83.08</td><td class="num">53.49</td><td class="num">58.24</td></tr>
+              <tr><td>Strong</td><td class="num">93.92</td><td class="num">56.57</td><td class="num">57.60</td></tr>
+              <tr class="total"><td><b>Spread (max − min)</b></td><td class="num bad">22.68</td><td class="num warn">7.68</td><td class="num good">1.42</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption">Swapping the LLM judge moves holistic scores by more than 22 points and QA probes by nearly 8, while bounded local scoring under OmniCapBench varies by only 1.4 — reliability comes from restricting the judge, not from a stronger judge.</p>
+      </div>
+    </div>
+
+    <figure class="figure">
+      <img src="static/images/error_composition.png" alt="Failure composition of evaluated models, normalized per model.">
+      <figcaption><b>Failure composition.</b> Each rule-based structural metric is converted into an absolute capability deficit (1 − score) and normalized to 100% of a model's failure distribution. Frontier models concentrate failures in fine-grained hallucination and audio-visual alignment; open-source models degrade broadly.</figcaption>
+    </figure>
+
+    <h3 class="sub-title">Error taxonomy</h3>
+    <p class="lead small">Every failure mode is tied to a rule-based metric, so a capability deficit is independently traceable rather than absorbed into one aggregate score. Counts and rates are from evaluation logs for Gemini 3.1-Pro.</p>
+    <div class="table-wrap">
+      <table class="table wide-text">
+        <thead>
+          <tr><th>Error family</th><th>Primary metric</th><th>What triggers it</th><th class="num">Count</th><th class="num">Rate</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Schema Failure <span class="tag">Gate</span></td><td class="mono">SGC</td><td>Output cannot be parsed into references, events and shots, or misses required JSON fields</td><td class="num">31</td><td class="num">3.8%</td></tr>
+          <tr><td>Reference Recovery <span class="tag v">Visual</span></td><td class="mono">Ref F1</td><td>A required ground-truth reference is missed, or a hallucinated reference cannot be matched</td><td class="num">3,778</td><td class="num">31.7%</td></tr>
+          <tr><td>Reference-Use <span class="tag v">Visual</span></td><td class="mono">RefUse</td><td>A matched shot or subshot cites the wrong persistent reference ID</td><td class="num">8,649</td><td class="num">34.1%</td></tr>
+          <tr><td>Identity Drift <span class="tag v">Visual</span></td><td class="mono">CCC</td><td>A persistent reference is split, merged or inconsistently tracked across shots</td><td class="num">2,656</td><td class="num">65.2%</td></tr>
+          <tr><td>Shot Recovery / Alignment <span class="tag v">Visual</span></td><td class="mono">Shot F1 / tIoU</td><td>A visual micro-action or boundary is missed, hallucinated or severely misaligned in time</td><td class="num">5,156</td><td class="num">26.2%</td></tr>
+          <tr><td>Event Recovery / Alignment <span class="tag a">Audio</span></td><td class="mono">Event F1 / tIoU</td><td>A required audio event is missed, hallucinated or aligned to the wrong time segment</td><td class="num">4,218</td><td class="num">36.2%</td></tr>
+          <tr><td>Event-Shot Link <span class="tag av">A-V</span></td><td class="mono">EVSA</td><td>A predicted audio event is attached to the wrong visual shot in the timeline</td><td class="num">1,654</td><td class="num">44.5%</td></tr>
+          <tr><td>Dialogue Error <span class="tag av">A-V</span></td><td class="mono">Speaker F1</td><td>Matched dialogue is mis-transcribed or assigned to the wrong visual speaker</td><td class="num">260</td><td class="num">7.0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">Qualitative case study</h3>
+    <figure class="figure">
+      <img src="static/images/case_study.png" alt="Qualitative case study of deep-structured diagnostics.">
+      <figcaption><b>Deep-structured diagnostics in action.</b> Holistic evaluation over-rewards fluent prose and misses errors such as hallucinated “protective eyewear” or temporally unsupported actions. By running bounded semantic checks on structurally valid units and assigning localized recall and precision, OmniCapBench decouples descriptive fidelity from structural noise and yields a high-resolution diagnostic trace.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ SERIES ============ -->
+<section class="section" id="series">
+  <div class="container">
+    <h2 class="section-title">The Omni-Video Series</h2>
+    <p class="lead">A three-step path toward omnimodal video understanding: <b>design the paradigm</b>, <b>measure it reliably</b>, then <b>iterate the algorithm</b>.</p>
+    <div class="series">
+      <a class="series-card" href="https://arxiv.org/abs/2604.11244" target="_blank" rel="noopener">
+        <div class="series-step">Step 1 · Paradigm</div>
+        <h3>MTSS</h3>
+        <p>Multi-Stream Scene Script — the factorized representation that decouples entities, audio events and visual states.</p>
+        <span class="series-meta">Tech Report · arXiv 2604.11244 <i class="fas fa-arrow-up-right-from-square"></i></span>
+      </a>
+      <div class="series-card current">
+        <div class="series-step">Step 2 · Evaluation</div>
+        <h3>OmniCapBench</h3>
+        <p>Deep-structured evaluation of fine-grained audio-visual captioning over 786 densely annotated videos.</p>
+        <span class="series-meta">NeurIPS 2026 · You are here</span>
+      </div>
+      <a class="series-card" href="https://arxiv.org/abs/2602.05847" target="_blank" rel="noopener">
+        <div class="series-step">Step 3 · Algorithm</div>
+        <h3>OmniVideo-R1</h3>
+        <p>Reinforcement-driven iteration on omnimodal video reasoning, guided by the diagnostics this benchmark exposes.</p>
+        <span class="series-meta">ICML · arXiv 2602.05847 <i class="fas fa-arrow-up-right-from-square"></i></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BIBTEX ============ -->
+<section class="section section-alt" id="bibtex">
+  <div class="container narrow">
+    <h2 class="section-title">BibTeX</h2>
+    <div class="bibtex-wrap">
+      <button class="copy-btn" id="copyBib"><i class="fas fa-copy"></i> Copy</button>
+      <pre id="bibtex-content">@inproceedings{yang2026omnicapbench,
+  title     = {OmniCapBench: A Deep-Structured Evaluation Framework for
+               Fine-Grained Audio-Visual Captioning},
+  author    = {Yang, Zhongyu and Tao, Jiale and Chen, Ruitao and Yang, Zuhao and
+               Yuan, Yingfang and Zhao, Xueliang and Auden and Wang, Kai and
+               Shao, Shuai and Wang, Biao and Yves, Steve and Lu, Qinglin},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS),
+               Evaluations and Datasets Track},
+  year      = {2026}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <a href="https://huggingface.co/datasets/OmniCapBench/OmniCapBench" target="_blank" rel="noopener">&#129303; Dataset</a>
+      <a href="https://github.com/01yzzyu" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+      <a href="#top"><i class="fas fa-arrow-up"></i> Back to top</a>
+    </div>
+    <p>
+      This website is licensed under a
+      <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+      Page layout borrows from the <a href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+    </p>
+  </div>
+</footer>
+
+<script src="static/js/main.js"></script>
+</body>
+</html>
