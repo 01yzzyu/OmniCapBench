@@ -44,14 +44,6 @@ static/images/          # figures exported from the paper
 }
 ```
 
-## Related work
-
-| Step | Project | Link |
-| --- | --- | --- |
-| Paradigm design | MTSS (Multi-Stream Scene Script) | [arXiv:2604.11244](https://arxiv.org/abs/2604.11244) |
-| Evaluation | **OmniCapBench** (NeurIPS 2026) | this repo |
-| Algorithm iteration | OmniVideo-R1 (ICML) | [arXiv:2602.05847](https://arxiv.org/abs/2602.05847) |
-
 ## License
 
 Website content released under [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/). Layout adapted from the [Nerfies](https://github.com/nerfies/nerfies.github.io) project page.

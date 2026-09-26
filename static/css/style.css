@@ -329,20 +329,6 @@ a:hover{text-decoration:underline}
 .finding h3{margin:0 0 6px; font-size:16.5px; font-weight:700}
 .finding p{margin:0; font-size:14.5px; color:var(--fg-muted)}
 
-/* ===== Series ===== */
-.series{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.series-card{
-  display:block; padding:22px; border-radius:var(--radius); background:var(--bg-card);
-  border:1px solid var(--border); box-shadow:var(--shadow); color:var(--fg); transition:.18s;
-}
-a.series-card:hover{text-decoration:none; transform:translateY(-2px); border-color:var(--accent)}
-.series-card.current{border:1px solid var(--accent); background:var(--accent-soft)}
-.series-step{font-size:11.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:8px}
-.series-card h3{margin:0 0 8px; font-size:19px; font-weight:750}
-.series-card p{margin:0 0 14px; font-size:14.5px; color:var(--fg-muted)}
-.series-meta{font-size:13px; color:var(--fg-faint); font-weight:500}
-.series-meta i{font-size:10px; margin-left:3px}
-
 /* ===== BibTeX ===== */
 .bibtex-wrap{position:relative}
 .bibtex-wrap pre{
