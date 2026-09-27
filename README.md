@@ -4,14 +4,14 @@ Project website for **OmniCapBench: A Deep-Structured Evaluation Framework for F
 
 🌐 **Website:** https://01yzzyu.github.io/OmniCapBench/
 🤗 **Dataset:** https://huggingface.co/datasets/OmniCapBench/OmniCapBench
-📄 **Paper / arXiv:** coming soon
+📄 **Paper:** https://openreview.net/forum?id=WgEmdr50mC (OpenReview) · arXiv coming soon
 💻 **Evaluation code:** coming soon
 
 ## About
 
 OmniCapBench reframes audio–visual caption evaluation as a deep-structured diagnostic framework. Instead of scoring free-form prose, models predict atomic, verifiable units across three native tracks — **References** (persistent entities), **Events** (timestamped audio) and **Shots** (visual timeline and cross-modal grounding). Deterministic rules verify structure; bounded LLM judges only compare local semantics on aligned units.
 
-786 densely annotated videos · 12.8 hours · 5,818 references · 11,419 shots · 39,160 subshots · 6,537 audio events
+Nine omnimodal MLLMs evaluated over 786 densely annotated videos · 12.8 hours · 5,818 references · 11,419 shots · 39,160 subshots · 6,537 audio events
 
 ## Local preview
 
@@ -40,7 +40,8 @@ static/images/          # figures exported from the paper
                Shao, Shuai and Wang, Biao and Yves, Steve and Lu, Qinglin},
   booktitle = {Advances in Neural Information Processing Systems (NeurIPS),
                Evaluations and Datasets Track},
-  year      = {2026}
+  year      = {2026},
+  url       = {https://openreview.net/forum?id=WgEmdr50mC}
 }
 ```
 
