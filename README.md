@@ -5,7 +5,7 @@ Project website for **OmniCapBench: A Deep-Structured Evaluation Framework for F
 🌐 **Website:** https://01yzzyu.github.io/OmniCapBench/
 🤗 **Dataset:** https://huggingface.co/datasets/OmniCapBench/OmniCapBench
 📄 **Paper:** https://openreview.net/forum?id=WgEmdr50mC (OpenReview) · arXiv coming soon
-💻 **Evaluation code:** coming soon
+💻 **Code:** https://github.com/Tencent/OmniCapBench
 
 ## About
 
