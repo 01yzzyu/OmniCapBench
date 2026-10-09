@@ -4,7 +4,7 @@ Project website for **OmniCapBench: A Deep-Structured Evaluation Framework for F
 
 🌐 **Website:** https://01yzzyu.github.io/OmniCapBench/
 🤗 **Dataset:** https://huggingface.co/datasets/OmniCapBench/OmniCapBench
-📄 **Paper:** https://openreview.net/forum?id=WgEmdr50mC (OpenReview) · arXiv coming soon
+📄 **Paper:** [OpenReview](https://openreview.net/forum?id=WgEmdr50mC) · [arXiv:2610.12458](https://arxiv.org/abs/2610.12458)
 💻 **Code:** https://github.com/Tencent/OmniCapBench
 
 ## About
@@ -41,7 +41,9 @@ static/images/          # figures exported from the paper
   booktitle = {Advances in Neural Information Processing Systems (NeurIPS),
                Evaluations and Datasets Track},
   year      = {2026},
-  url       = {https://openreview.net/forum?id=WgEmdr50mC}
+  url       = {https://openreview.net/forum?id=WgEmdr50mC},
+  eprint    = {2610.12458},
+  archivePrefix = {arXiv}
 }
 ```
 
